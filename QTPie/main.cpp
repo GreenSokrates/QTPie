@@ -1,27 +1,17 @@
-#include <QGuiApplication>
-#include <QQmlApplicationEngine>
+#include "mainwindow.h"
+#include <QApplication>
 
-int
-main(int argc, char* argv[])
+int main(int argc, char* argv[])
 {
-  qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
+    QApplication a(argc, argv);
+    MainWindow w;
 
-  QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    // hide window titlebar, ALT + F4 still works
+    w.setWindowFlags(Qt::Window | Qt::FramelessWindowHint | Qt::WindowCloseButtonHint);
 
-  QGuiApplication app(argc, argv);
+    // Select Fullscreen for RPI
+    w.show();
+    // w.showFullScreen();
 
-  QQmlApplicationEngine engine;
-  const QUrl url(QStringLiteral("qrc:/main.qml"));
-  QObject::connect(
-    &engine,
-    &QQmlApplicationEngine::objectCreated,
-    &app,
-    [url](QObject* obj, const QUrl& objUrl) {
-      if (!obj && url == objUrl)
-        QCoreApplication::exit(-1);
-    },
-    Qt::QueuedConnection);
-
-  engine.load(url);
-  return app.exec();
+    return a.exec();
 }
