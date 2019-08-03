@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "lcd_clock.h"
 #include <QApplication>
 
 int main(int argc, char* argv[])
@@ -8,6 +9,7 @@ int main(int argc, char* argv[])
 
     // hide window titlebar, ALT + F4 still works
     w.setWindowFlags(Qt::Window | Qt::FramelessWindowHint | Qt::WindowCloseButtonHint);
+
 
     // Select Fullscreen for RPI
     w.show();

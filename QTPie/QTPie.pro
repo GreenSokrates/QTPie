@@ -27,11 +27,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        lcd_clock.cpp \
         main.cpp \
         mainwindow.cpp \
         station.cpp
 
 HEADERS += \
+        lcd_clock.h \
         mainwindow.h \
         station.h
 

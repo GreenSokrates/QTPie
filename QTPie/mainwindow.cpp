@@ -1,35 +1,31 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QtWidgets>
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+
+    // Setting up Timer for Clock
+    QTimer *timer = new QTimer(this);
+    connect(timer, & QTimer::timeout, this, &MainWindow::showTime);
+    timer->start(1000);
+
     ui->setupUi(this);
 
-    manager = new QNetworkAccessManager();
-    QObject::connect(manager, &QNetworkAccessManager::finished, this,
-        [=](QNetworkReply* reply) {
-            if (reply->error()) {
-                qDebug() << reply->errorString();
-                return;
-            }
-
-            QString answer = reply->readAll();
-
-            qDebug() << answer;
-        });
 }
 
-void MainWindow::on_RefreshButton_clicked()
+void MainWindow::showTime()
 {
-    //request.setUrl(QUrl("http://transport.opendata.ch/v1/locations?query=Hardbrücke"));
-    request.setUrl(QUrl("http://transport.opendata.ch/v1/stationboard?station=Zürich Hardbrücke&limit=10"));
-    manager->get(request);
+    QTime time = QTime::currentTime();
+    QString text = time.toString("hh:mm");
+    if ((time.second() % 2) == 0)
+        text[2] = ' ';
+    ui->lcd_clock->display(text);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete manager;
 }

@@ -2,9 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
-#include <QNetworkRequest>
+#include <QLCDNumber>
 
 namespace Ui {
 class MainWindow;
@@ -17,13 +15,12 @@ public:
     explicit MainWindow(QWidget* parent = nullptr);
     ~MainWindow();
 
-private slots:
-    void on_RefreshButton_clicked();
 
 private:
     Ui::MainWindow* ui;
-    QNetworkAccessManager* manager;
-    QNetworkRequest request;
+
+private slots:
+    void showTime();
 };
 
 #endif // MAINWINDOW_H
